@@ -109,7 +109,7 @@ var styles = map[string]SCode{
 	"ct":          CrossedOut,
 }
 
-// Colorize method parses the style formatter in text and stylizes it with ANSI codes.
+// Colorize function parses the style formatter in text and stylizes it with ANSI codes.
 func Colorize(text string) string {
 	pattern := `%[a-zA-Z]+`
 
