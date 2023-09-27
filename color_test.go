@@ -32,6 +32,6 @@ func TestColor(t *testing.T) {
 	}
 
 	for _, s := range scenarios {
-		asrt.Equal(Color(s.input), s.output)
+		asrt.Equal(Colorize(s.input), s.output)
 	}
 }

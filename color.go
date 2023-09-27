@@ -109,8 +109,8 @@ var styles = map[string]SCode{
 	"ct":          CrossedOut,
 }
 
-// Color method parses the style formatter in text and stylizes it with ANSI codes.
-func Color(text string) string {
+// Colorize method parses the style formatter in text and stylizes it with ANSI codes.
+func Colorize(text string) string {
 	pattern := `%[a-zA-Z]+`
 
 	re := regexp.MustCompile(pattern)
