@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-// SCode Struct for style code.
-type SCode int
+// CCode Struct for color code.
+type CCode int
 
 // Regular Colors
 const (
-	Black SCode = iota + 30
+	Black CCode = iota + 30
 	Red
 	Green
 	Yellow
@@ -23,7 +23,7 @@ const (
 
 // Background Colors
 const (
-	BackgroundBlack SCode = iota + 40
+	BackgroundBlack CCode = iota + 40
 	BackgroundRed
 	BackgroundGreen
 	BackgroundYellow
@@ -35,7 +35,7 @@ const (
 
 // Bright Colors
 const (
-	BrightBlack SCode = iota + 90
+	BrightBlack CCode = iota + 90
 	BrightRed
 	BrightGreen
 	BrightYellow
@@ -47,7 +47,7 @@ const (
 
 // Bright Background Colors
 const (
-	BackgroundBrightBlack SCode = iota + 100
+	BackgroundBrightBlack CCode = iota + 100
 	BackgroundBrightRed
 	BackgroundBrightGreen
 	BackgroundBrightYellow
@@ -68,7 +68,7 @@ const (
 )
 
 // Match value for styles
-var styles = map[string]SCode{
+var styles = map[string]CCode{
 	"black":       Black,
 	"red":         Red,
 	"green":       Green,
