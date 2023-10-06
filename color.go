@@ -124,7 +124,7 @@ var sgrParams = map[string]int{
 	"strike":    9,
 }
 
-// Colorize function parses the style formatter in text and stylizes it with ANSI codes.
+// Colorize function parses the style formatter in text and stylizes it with ANSI codes and RGB.
 func Colorize(text string) string {
 	pattern := `%[a-zA-Z0-9]+`
 
@@ -138,13 +138,14 @@ func Colorize(text string) string {
 			text = regexp.MustCompile(`(\s{1})?`+pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[%dm", sqr))
 		}
 
-		colorChans, exists := colors[strings.ToLower(match[3:])]
-		if strings.ToLower(match[1:3]) == "bg" && exists {
-			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", colorChans[0], colorChans[1], colorChans[2]))
+		if len(match) == 3 && strings.ToLower(match[1:3]) == "bg" {
+			colorChans, exists := colors[strings.ToLower(match[3:])]
+			if exists {
+				text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", colorChans[0], colorChans[1], colorChans[2]))
+			}
 		}
 
-		colorChans, exists = colors[strings.ToLower(match[1:])]
-		if exists {
+		if colorChans, exists := colors[strings.ToLower(match[1:])]; exists {
 			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;2;%d;%d;%dm", colorChans[0], colorChans[1], colorChans[2]))
 		}
 	}
