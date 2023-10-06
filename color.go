@@ -1,129 +1,151 @@
 package color
 
 import (
+	"fmt"
 	"regexp"
-	"strconv"
 	"strings"
 )
 
-// CCode Struct for color code.
-type CCode int
+var colors = map[string][3]int{
+	// Red tones
+	"red":    {255, 0, 0}, // Red
+	"red10":  {240, 0, 0}, // Light Red
+	"red20":  {224, 0, 0}, // Light Red
+	"red30":  {208, 0, 0}, // Light Red
+	"red40":  {192, 0, 0}, // Light Red
+	"red50":  {176, 0, 0}, // Light Red
+	"red60":  {160, 0, 0}, // Dark Red
+	"red70":  {144, 0, 0}, // Dark Red
+	"red80":  {128, 0, 0}, // Dark Red
+	"red90":  {112, 0, 0}, // Dark Red
+	"red100": {96, 0, 0},  // Dark Red
 
-// Regular Colors
-const (
-	Black CCode = iota + 30
-	Red
-	Green
-	Yellow
-	Blue
-	Magenta
-	Cyan
-	White
-)
+	// Green tones
+	"green":    {0, 255, 0}, // Green
+	"green10":  {0, 240, 0}, // Light Green
+	"green20":  {0, 224, 0}, // Light Green
+	"green30":  {0, 208, 0}, // Light Green
+	"green40":  {0, 192, 0}, // Light Green
+	"green50":  {0, 176, 0}, // Light Green
+	"green60":  {0, 160, 0}, // Dark Green
+	"green70":  {0, 144, 0}, // Dark Green
+	"green80":  {0, 128, 0}, // Dark Green
+	"green90":  {0, 112, 0}, // Dark Green
+	"green100": {0, 96, 0},  // Dark Green
 
-// Background Colors
-const (
-	BackgroundBlack CCode = iota + 40
-	BackgroundRed
-	BackgroundGreen
-	BackgroundYellow
-	BackgroundBlue
-	BackgroundMagenta
-	BackgroundCyan
-	BackgroundWhite
-)
+	// Yellow tones
+	"yellow":    {255, 255, 0}, // Yellow
+	"yellow10":  {240, 240, 0}, // Light Yellow
+	"yellow20":  {224, 224, 0}, // Light Yellow
+	"yellow30":  {208, 208, 0}, // Light Yellow
+	"yellow40":  {192, 192, 0}, // Light Yellow
+	"yellow50":  {176, 176, 0}, // Light Yellow
+	"yellow60":  {160, 160, 0}, // Dark Yellow
+	"yellow70":  {144, 144, 0}, // Dark Yellow
+	"yellow80":  {128, 128, 0}, // Dark Yellow
+	"yellow90":  {112, 112, 0}, // Dark Yellow
+	"yellow100": {96, 96, 0},   // Dark Yellow
 
-// Bright Colors
-const (
-	BrightBlack CCode = iota + 90
-	BrightRed
-	BrightGreen
-	BrightYellow
-	BrightBlue
-	BrightMagenta
-	BrightCyan
-	BrightWhite
-)
+	// Cyan tones
+	"cyan":    {0, 255, 255}, // Cyan
+	"cyan10":  {0, 240, 240}, // Light Cyan
+	"cyan20":  {0, 224, 224}, // Light Cyan
+	"cyan30":  {0, 208, 208}, // Light Cyan
+	"cyan40":  {0, 192, 192}, // Light Cyan
+	"cyan50":  {0, 176, 176}, // Light Cyan
+	"cyan60":  {0, 160, 160}, // Dark Cyan
+	"cyan70":  {0, 144, 144}, // Dark Cyan
+	"cyan80":  {0, 128, 128}, // Dark Cyan
+	"cyan90":  {0, 112, 112}, // Dark Cyan
+	"cyan100": {0, 96, 96},   // Dark Cyan
 
-// Bright Background Colors
-const (
-	BackgroundBrightBlack CCode = iota + 100
-	BackgroundBrightRed
-	BackgroundBrightGreen
-	BackgroundBrightYellow
-	BackgroundBrightBlue
-	BackgroundBrightMagenta
-	BackgroundBrightCyan
-	BackgroundBrightWhite
-)
+	// Blue tones
+	"blue":    {0, 0, 255}, // Blue
+	"blue10":  {0, 0, 240}, // Light Blue
+	"blue20":  {0, 0, 224}, // Light Blue
+	"blue30":  {0, 0, 208}, // Light Blue
+	"blue40":  {0, 0, 192}, // Light Blue
+	"blue50":  {0, 0, 176}, // Light Blue
+	"blue60":  {0, 0, 160}, // Dark Blue
+	"blue70":  {0, 0, 144}, // Dark Blue
+	"blue80":  {0, 0, 128}, // Dark Blue
+	"blue90":  {0, 0, 112}, // Dark Blue
+	"blue100": {0, 0, 96},  // Dark Blue
 
-// Select Graphic Rendition https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
-const (
-	Reset      = 0
-	Bold       = 1
-	Italic     = 3
-	Underline  = 4
-	Reverse    = 7
-	CrossedOut = 9
-)
+	// Magenta tones
+	"magenta":    {255, 0, 255}, // Magenta
+	"magenta10":  {240, 0, 240}, // Light Magenta
+	"magenta20":  {224, 0, 224}, // Light Magenta
+	"magenta30":  {208, 0, 208}, // Light Magenta
+	"magenta40":  {192, 0, 192}, // Light Magenta
+	"magenta50":  {176, 0, 176}, // Light Magenta
+	"magenta60":  {160, 0, 160}, // Dark Magenta
+	"magenta70":  {144, 0, 144}, // Dark Magenta
+	"magenta80":  {128, 0, 128}, // Dark Magenta
+	"magenta90":  {112, 0, 112}, // Dark Magenta
+	"magenta100": {96, 0, 96},   // Dark Magenta
 
-// Match value for styles
-var styles = map[string]CCode{
-	"black":       Black,
-	"red":         Red,
-	"green":       Green,
-	"yellow":      Yellow,
-	"blue":        Blue,
-	"magenta":     Magenta,
-	"cyan":        Cyan,
-	"white":       White,
-	"bgblack":     BackgroundBlack,
-	"bgred":       BackgroundRed,
-	"bggreen":     BackgroundGreen,
-	"bgyellow":    BackgroundYellow,
-	"bgblue":      BackgroundBlue,
-	"bgmagenta":   BackgroundMagenta,
-	"bgcyan":      BackgroundCyan,
-	"bgwhite":     BackgroundWhite,
-	"brblack":     BrightBlack,
-	"brred":       BrightRed,
-	"brgreen":     BrightGreen,
-	"bryellow":    BrightYellow,
-	"brblue":      BrightBlue,
-	"brmagenta":   BrightMagenta,
-	"brcyan":      BrightCyan,
-	"brwhite":     BrightWhite,
-	"bgbrblack":   BackgroundBrightBlack,
-	"bgbrred":     BackgroundBrightRed,
-	"bgbrgreen":   BackgroundBrightGreen,
-	"bgbryellow":  BackgroundBrightYellow,
-	"bgbrblue":    BackgroundBrightBlue,
-	"bgbrmagenta": BackgroundBrightMagenta,
-	"bgbrcyan":    BackgroundBrightCyan,
-	"bgbrwhite":   BackgroundBrightWhite,
-	"rt":          Reset,
-	"bd":          Bold,
-	"ic":          Italic,
-	"un":          Underline,
-	"re":          Reverse,
-	"ct":          CrossedOut,
+	// White tones
+	"white":    {255, 255, 255}, // White
+	"white10":  {240, 240, 240}, // Light White
+	"white20":  {224, 224, 224}, // Light White
+	"white30":  {208, 208, 208}, // Light White
+	"white40":  {192, 192, 192}, // Light White
+	"white50":  {176, 176, 176}, // Light White
+	"white60":  {160, 160, 160}, // Dark White
+	"white70":  {144, 144, 144}, // Dark White
+	"white80":  {128, 128, 128}, // Dark White
+	"white90":  {112, 112, 112}, // Dark White
+	"white100": {96, 96, 96},    // Dark White
+
+	// Black tones
+	"black":    {0, 0, 0},       // Black
+	"black10":  {16, 16, 16},    // Dark Gray
+	"black20":  {32, 32, 32},    // Dark Gray
+	"black30":  {48, 48, 48},    // Dark Gray
+	"black40":  {64, 64, 64},    // Gray
+	"black50":  {80, 80, 80},    // Gray
+	"black60":  {96, 96, 96},    // Light Gray
+	"black70":  {112, 112, 112}, // Light Gray
+	"black80":  {128, 128, 128}, // Light Gray
+	"black90":  {144, 144, 144}, // Light Gray
+	"black100": {160, 160, 160}, // Light Gray
+}
+
+// SGR Parameters https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
+var sgrParams = map[string]int{
+	"reset":     0,
+	"bold":      1,
+	"italic":    3,
+	"blink":     5,
+	"underline": 4,
+	"overline":  53,
+	"invert":    7,
+	"strike":    9,
 }
 
 // Colorize function parses the style formatter in text and stylizes it with ANSI codes.
 func Colorize(text string) string {
-	pattern := `%[a-zA-Z]+`
+	pattern := `%[a-zA-Z0-9]+`
 
 	re := regexp.MustCompile(pattern)
 	matches := re.FindAllString(text, -1)
 
 	for _, match := range matches {
-		formatter := strings.TrimLeft(match, "%")
-		code, exists := styles[strings.ToLower(formatter)]
-
 		pattern := match + `(\s{1})?`
 
+		if sqr, exists := sgrParams[strings.ToLower(match[1:])]; exists {
+			text = regexp.MustCompile(`(\s{1})?`+pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[%dm", sqr))
+		}
+
+		colorChans, exists := colors[strings.ToLower(match[3:])]
+		if strings.ToLower(match[1:3]) == "bg" && exists {
+			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", colorChans[0], colorChans[1], colorChans[2]))
+		}
+
+		colorChans, exists = colors[strings.ToLower(match[1:])]
 		if exists {
-			text = regexp.MustCompile(pattern).ReplaceAllString(text, "\x1b["+strconv.Itoa(int(code))+"m")
+			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;2;%d;%d;%dm", colorChans[0], colorChans[1], colorChans[2]))
 		}
 	}
 
