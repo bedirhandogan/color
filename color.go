@@ -139,14 +139,14 @@ func Colorize(text string) string {
 		}
 
 		if len(match) == 3 && strings.ToLower(match[1:3]) == "bg" {
-			colorChans, exists := colors[strings.ToLower(match[3:])]
+			chans, exists := colors[strings.ToLower(match[3:])]
 			if exists {
-				text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", colorChans[0], colorChans[1], colorChans[2]))
+				text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", chans[0], chans[1], chans[2]))
 			}
 		}
 
-		if colorChans, exists := colors[strings.ToLower(match[1:])]; exists {
-			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;2;%d;%d;%dm", colorChans[0], colorChans[1], colorChans[2]))
+		if chans, exists := colors[strings.ToLower(match[1:])]; exists {
+			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;2;%d;%d;%dm", chans[0], chans[1], chans[2]))
 		}
 	}
 
