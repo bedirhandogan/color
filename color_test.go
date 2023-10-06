@@ -1,8 +1,8 @@
 package color
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
-	"strconv"
 	"testing"
 )
 
@@ -15,19 +15,13 @@ func TestColor(t *testing.T) {
 	}{
 		{
 			input:  "%red Hello, World!",
-			output: "\x1b[" + strconv.Itoa(int(Red)) + "mHello, World!",
-		},
-		{
-			input:  "%ic %red Hello, World!",
-			output: "\x1b[" + strconv.Itoa(Italic) + "m\x1b[" + strconv.Itoa(int(Red)) + "mHello, World!",
-		},
-		{
-			input:  "%red Hello, %cyan World!",
-			output: "\x1b[" + strconv.Itoa(int(Red)) + "mHello, \x1b[" + strconv.Itoa(int(Cyan)) + "mWorld!",
-		},
-		{
-			input:  "%red Hello, %cyan World! %rt \n",
-			output: "\x1b[" + strconv.Itoa(int(Red)) + "mHello, \x1b[" + strconv.Itoa(int(Cyan)) + "mWorld! \x1b[0m\n",
+			output: fmt.Sprintf("\x1b[38;2;%d;%d;%dmHello, World!", colors["red"][0], colors["red"][2], colors["red"][2]),
+		}, {
+			input:  "%BgRed100 Hello, World!",
+			output: fmt.Sprintf("\x1b[48;2;%d;%d;%dmHello, World!", colors["red100"][0], colors["red100"][2], colors["red100"][2]),
+		}, {
+			input:  "%italic %red Hello, World! %reset",
+			output: fmt.Sprintf("\x1b[%dm\x1b[38;2;%d;%d;%dmHello, World!\x1b[%dm", sgrParams["italic"], colors["red"][0], colors["red"][2], colors["red"][2], sgrParams["reset"]),
 		},
 	}
 
