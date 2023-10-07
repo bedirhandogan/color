@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestColor(t *testing.T) {
+func TestColorize(t *testing.T) {
 	asrt := assert.New(t)
 
 	scenarios := []struct {
