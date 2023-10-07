@@ -192,7 +192,7 @@ func Colorize(text string) string {
 		}
 
 		chans, exists := colors[strings.ToLower(match[3:])]
-		if exists && len(match) == 3 && strings.ToLower(match[1:3]) == "bg" {
+		if exists && len(match) >= 3 && strings.ToLower(match[1:3]) == "bg" {
 			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", chans[0], chans[1], chans[2]))
 		}
 
