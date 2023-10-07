@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+// Color tones with RGB.
 var colors = map[string][3]int{
 	// Red tones
 	"red":    {255, 0, 0}, // Red
@@ -112,6 +113,7 @@ var colors = map[string][3]int{
 	"black100": {160, 160, 160}, // Light Gray
 }
 
+// New colors with RGB and ANSI 256 color index
 var newColors = make(map[string]interface{})
 
 // SGR Parameters https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
@@ -126,7 +128,7 @@ var sgrParams = map[string]int{
 	"strike":    9,
 }
 
-// NewColor function retrieves the color name and color code associated with specific color patterns and add new color
+// NewColor function retrieves the color name and color code associated with specific color patterns and add new color.
 //
 //	Parameters:
 //	- Name: If you use the bg prefix when naming the color, e.g (BgCRed) creates a background color.
@@ -146,24 +148,27 @@ func NewColor(name string, value ...int) {
 	}
 }
 
-func useNewColors(text, match, pattern string) string {
+// useNewColor function, gets all generated custom formatters from text.
+// Replaces all RGB and ANSI 256 color indexes with escape strings with the help of ANSI escape codes.
+func useNewColor(text, match, pattern string) string {
 	value, exist := newColors[strings.ToLower(match[1:])]
 	color, isInt := value.([]int)
 
 	if exist && isInt {
-		if len(color) == 1 {
+		switch len(color) {
+		case 1:
 			if len(match) >= 3 && strings.ToLower(match[1:3]) == "bg" {
 				return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;5;%dm", color[0]))
 			}
 
 			return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;5;%dm", color[0]))
-		}
+		case 3:
+			if len(match) >= 3 && strings.ToLower(match[1:3]) == "bg" {
+				return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", color[0], color[1], color[2]))
+			}
 
-		if len(match) >= 3 && strings.ToLower(match[1:3]) == "bg" {
-			return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", color[0], color[1], color[2]))
+			return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;2;%d;%d;%dm", color[0], color[1], color[2]))
 		}
-
-		return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;2;%d;%d;%dm", color[0], color[1], color[2]))
 	}
 
 	return text
@@ -179,7 +184,7 @@ func Colorize(text string) string {
 	for _, match := range matches {
 		pattern := match + `(\s{1})?`
 
-		text = useNewColors(text, match, pattern)
+		text = useNewColor(text, match, pattern)
 
 		if sqr, exists := sgrParams[strings.ToLower(match[1:])]; exists {
 			text = regexp.MustCompile(`(\s{1})?`+pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[%dm", sqr))
