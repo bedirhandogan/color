@@ -150,9 +150,10 @@ func NewColor(name string, value ...int) {
 
 // useNewColor function, gets all generated custom formatters from text.
 // Replaces all RGB and ANSI 256 color indexes with escape strings with the help of ANSI escape codes.
-func useNewColor(text, match, pattern string) string {
+func useNewColor(text, match string) string {
 	value, exist := newColors[strings.ToLower(match[1:])]
 	color, isInt := value.([]int)
+	pattern := match + `(\s{1})?`
 
 	if exist && isInt {
 		switch len(color) {
@@ -184,7 +185,7 @@ func Colorize(text string) string {
 	for _, match := range matches {
 		pattern := match + `(\s{1})?`
 
-		text = useNewColor(text, match, pattern)
+		text = useNewColor(text, match)
 
 		if sqr, exists := sgrParams[strings.ToLower(match[1:])]; exists {
 			text = regexp.MustCompile(`(\s{1})?`+pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[%dm", sqr))
