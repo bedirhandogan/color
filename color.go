@@ -112,6 +112,8 @@ var colors = map[string][3]int{
 	"black100": {160, 160, 160}, // Light Gray
 }
 
+var newColors = make(map[string]interface{})
+
 // SGR Parameters https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters
 var sgrParams = map[string]int{
 	"reset":     0,
@@ -124,6 +126,49 @@ var sgrParams = map[string]int{
 	"strike":    9,
 }
 
+// NewColor function retrieves the color name and color code associated with specific color patterns and add new color
+//
+//	Parameters:
+//	- Name: If you use the bg prefix when naming the color, e.g (BgCRed) creates a background color.
+//	- Value: If it takes a 1-digit value, for example (10) 256, it will be perceived as ANSI color index.
+//	If it takes a 3-digit value, for example (0, 255, 0), it will be perceived as rgb channels.
+func NewColor(name string, value ...int) {
+	if _, exist := colors[strings.ToLower(name)]; exist {
+		fmt.Printf(Colorize("Color: Error occurred color name '%s' already exists."), name)
+		return
+	}
+
+	switch len(value) {
+	case 1:
+		newColors[strings.ToLower(name)] = []int{value[0]}
+	case 3:
+		newColors[strings.ToLower(name)] = []int{value[0], value[1], value[2]}
+	}
+}
+
+func useNewColors(text, match, pattern string) string {
+	value, exist := newColors[strings.ToLower(match[1:])]
+	color, isInt := value.([]int)
+
+	if exist && isInt {
+		if len(color) == 1 {
+			if len(match) >= 3 && strings.ToLower(match[1:3]) == "bg" {
+				return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;5;%dm", color[0]))
+			}
+
+			return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;5;%dm", color[0]))
+		}
+
+		if len(match) >= 3 && strings.ToLower(match[1:3]) == "bg" {
+			return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", color[0], color[1], color[2]))
+		}
+
+		return regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[38;2;%d;%d;%dm", color[0], color[1], color[2]))
+	}
+
+	return text
+}
+
 // Colorize function parses the style formatter in text and stylizes it with ANSI codes and RGB.
 func Colorize(text string) string {
 	pattern := `%[a-zA-Z0-9]+`
@@ -134,15 +179,15 @@ func Colorize(text string) string {
 	for _, match := range matches {
 		pattern := match + `(\s{1})?`
 
+		text = useNewColors(text, match, pattern)
+
 		if sqr, exists := sgrParams[strings.ToLower(match[1:])]; exists {
 			text = regexp.MustCompile(`(\s{1})?`+pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[%dm", sqr))
 		}
 
-		if len(match) == 3 && strings.ToLower(match[1:3]) == "bg" {
-			chans, exists := colors[strings.ToLower(match[3:])]
-			if exists {
-				text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", chans[0], chans[1], chans[2]))
-			}
+		chans, exists := colors[strings.ToLower(match[3:])]
+		if len(match) == 3 && strings.ToLower(match[1:3]) == "bg" && exists {
+			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[48;2;%d;%d;%dm", chans[0], chans[1], chans[2]))
 		}
 
 		if chans, exists := colors[strings.ToLower(match[1:])]; exists {
