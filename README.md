@@ -61,19 +61,19 @@ fmt.Printf(color.Colorize("%Cyan Print this text with %s"), "native formatter")
 ### Create New Color
 ```golang
 // Create and use new solid color with ANSI 256 index
-NewColor("FaintRed", 124)
+color.NewColor("FaintRed", 124)
 fmt.Println(color.Colorize("%FaintRed Print this text faint red color."))
 
 // Create and use new background color with ANSI 256 index
-NewColor("BgFaintRed", 124)
+color.NewColor("BgFaintRed", 124)
 fmt.Println(color.Colorize("%BgFaintRed Print this text faint red background color."))
 
 // Create and use new solid color with RGB
-NewColor("LightRed", 255, 192, 203)
+color.NewColor("LightRed", 255, 192, 203)
 fmt.Println(color.Colorize("%FaintRed Print this text light red color."))
 
 // Create and use new background color with RGB
-NewColor("BgLightRed", 255, 192, 203)
+color.NewColor("BgLightRed", 255, 192, 203)
 fmt.Println(color.Colorize("%BgFaintRed Print this text light red background color."))
 ```
 
