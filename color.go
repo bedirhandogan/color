@@ -188,7 +188,7 @@ func Colorize(text string) string {
 		text = useNewColor(text, match)
 
 		if sqr, exists := sgrParams[strings.ToLower(match[1:])]; exists {
-			text = regexp.MustCompile(`(\s{1})?`+pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[%dm", sqr))
+			text = regexp.MustCompile(pattern).ReplaceAllString(text, fmt.Sprintf("\x1b[%dm", sqr))
 		}
 
 		chans, exists := colors[strings.ToLower(match[3:])]
