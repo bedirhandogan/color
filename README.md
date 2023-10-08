@@ -1,4 +1,4 @@
-# Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color) [![Static Badge](https://img.shields.io/badge/Color%20Shades-3A2BE2)](https://github.com/bedirhandogan/color#color-shades) 
+# Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color) [![Static Badge](https://img.shields.io/badge/Color%20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) 
 
 You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index. 
 All formatters are parsed as ANSI Escape Code.
@@ -77,7 +77,7 @@ NewColor("BgLightRed", 255, 192, 203)
 fmt.Println(color.Colorize("%BgFaintRed Print this text light red background color."))
 ```
 
-## [Colors](#color-shades)
+## [Colors](#colors)
 Below are the default color shades you can use:
 - [Red Shades](#red-shades)
 - [Green Shades](#green-shades)
