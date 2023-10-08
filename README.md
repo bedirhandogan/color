@@ -3,7 +3,8 @@
 You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index. 
 All formatters are parsed as ANSI Escape Code.
 
-![code sample](https://github.com/bedirhandogan/color/assets/59766658/1cd9292b-f6da-43d1-a247-5bd65609d96f)
+![code sample](https://github.com/bedirhandogan/color/assets/59766658/976317f7-a2cc-449f-99ed-2b724a543177)
+
 
 ## Install
 ```bash
