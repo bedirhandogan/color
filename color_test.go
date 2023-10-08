@@ -22,7 +22,7 @@ func TestColorize(t *testing.T) {
 			output: fmt.Sprintf("\x1b[48;2;%d;%d;%dmHello, World!", colors["red100"][0], colors["red100"][1], colors["red100"][2]),
 		}, {
 			input:  "%italic %red Hello, World! %reset",
-			output: fmt.Sprintf("\x1b[%dm\x1b[38;2;%d;%d;%dmHello, World!\x1b[%dm", sgrParams["italic"], colors["red"][0], colors["red"][1], colors["red"][2], sgrParams["reset"]),
+			output: fmt.Sprintf("\x1b[%dm\x1b[38;2;%d;%d;%dmHello, World! \x1b[%dm", sgrParams["italic"], colors["red"][0], colors["red"][1], colors["red"][2], sgrParams["reset"]),
 		},
 	}
 
