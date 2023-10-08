@@ -3,7 +3,8 @@
 You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index. 
 All formatters are parsed as ANSI Escape Code.
 
-![code sample](https://github.com/bedirhandogan/color/assets/59766658/1cd9292b-f6da-43d1-a247-5bd65609d96f)
+![code sample](https://github.com/bedirhandogan/color/assets/59766658/976317f7-a2cc-449f-99ed-2b724a543177)
+
 
 ## Install
 ```bash
@@ -33,7 +34,7 @@ fmt.Println(color.Colorize("%Blue Print this text with %Green multiple colors.")
 fmt.Println(color.Colorize("%Blue70 Print this text with %Green20 multiple colors."))
 
 // Print all text with multiple background color
-fmt.Println(color.Colorize("%Yellow20 Print this text with %Blue multiple colors."))
+fmt.Println(color.Colorize("%BgYellow20 Print this text with %BgBlue multiple background colors."))
 ``` 
 
 ### Use [SGR](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters) Parameters
