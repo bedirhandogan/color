@@ -16,13 +16,13 @@ func TestColorize(t *testing.T) {
 		output string
 	}{
 		{
-			input:  "%red Hello, World!",
+			input:  "&red Hello, World!",
 			output: fmt.Sprintf("%vHello, World!", defaultColors["red"].escape(false)),
 		}, {
-			input:  "%BgRed100 Hello, World!",
+			input:  "&BgRed100 Hello, World!",
 			output: fmt.Sprintf("%vHello, World!", defaultColors["red100"].escape(true)),
 		}, {
-			input:  "%italic %red Hello, World!%reset",
+			input:  "&italic &red Hello, World!&reset",
 			output: fmt.Sprintf("\x1b[%dm%vHello, World!\x1b[%dm", sgrParams["italic"], defaultColors["red"].escape(false), sgrParams["reset"]),
 		},
 	}
@@ -67,10 +67,10 @@ func TestUseAdditional(t *testing.T) {
 		text, output string
 	}{
 		{
-			text:   "%TestRed Hello, World!",
+			text:   "&TestRed Hello, World!",
 			output: fmt.Sprintf("\x1b[38;5;%dmHello, World!", 9),
 		}, {
-			text:   "%BgTestRed Hello, World!",
+			text:   "&BgTestRed Hello, World!",
 			output: fmt.Sprintf("\x1b[48;5;%dmHello, World!", 9),
 		},
 	}

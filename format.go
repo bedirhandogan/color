@@ -11,7 +11,7 @@ func Stringf(format string, a ...interface{}) string {
 }
 
 func String(text string) string {
-	pattern := `%[a-zA-Z0-9]+`
+	pattern := `&[a-zA-Z0-9]+`
 	regx := regexp.MustCompile(pattern)
 
 	matches := regx.FindAllString(text, -1)
