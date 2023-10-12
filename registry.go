@@ -124,6 +124,20 @@ var sgrParams = map[string]uint8{
 	"strike":    9,
 }
 
+func Escape(name string, back bool) (string, bool) {
+	value, exists := additionalColors[name]
+	if exists {
+		return value.escape(back), true
+	}
+
+	value, exists = defaultColors[name]
+	if exists {
+		return value.escape(back), true
+	}
+
+	return "", false
+}
+
 func RegisterAnsi(name string, code uint8) error {
 	return register(name, &ansi{code})
 }

@@ -40,15 +40,9 @@ func String(text string) string {
 			target = matchLower[1:]
 		}
 
-		value, exists := additionalColors[target]
+		escape, exists := Escape(target, back)
 		if exists {
-			replace(match, value.escape(back))
-			continue
-		}
-
-		value, exists = defaultColors[target]
-		if exists {
-			replace(match, value.escape(back))
+			replace(match, escape)
 		}
 	}
 

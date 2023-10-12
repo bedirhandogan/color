@@ -1,5 +1,7 @@
 package color
 
+import "os"
+
 type color interface {
 	escape(bg bool) string
 }
@@ -19,5 +21,11 @@ type rgb struct {
 }
 
 func (c *rgb) escape(back bool) string {
-	return RgbToEscape(c.r, c.b, c.g, back)
+	colorterm := os.Getenv("COLORTERM")
+
+	if colorterm == "truecolor" || colorterm == "24bit" {
+		return RgbToEscape(c.r, c.b, c.g, back)
+	}
+
+	return AnsiToEscape(RgbToAnsi(c.r, c.b, c.g), back)
 }
