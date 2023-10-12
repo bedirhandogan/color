@@ -23,7 +23,7 @@ func TestColorize(t *testing.T) {
 			output: fmt.Sprintf("%vHello, World!", defaultColors["red100"].escape(true)),
 		}, {
 			input:  "&italic &red Hello, World!&reset",
-			output: fmt.Sprintf("\x1b[%dm%vHello, World!\x1b[%dm", sgrParams["italic"], defaultColors["red"].escape(false), sgrParams["reset"]),
+			output: fmt.Sprintf("%v%vHello, World!%v", SgrToEscape(sgrParams["italic"]), defaultColors["red"].escape(false), SgrToEscape(sgrParams["reset"])),
 		},
 	}
 
