@@ -2,9 +2,10 @@ package color
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestColorize(t *testing.T) {
@@ -16,51 +17,51 @@ func TestColorize(t *testing.T) {
 	}{
 		{
 			input:  "%red Hello, World!",
-			output: fmt.Sprintf("\x1b[38;2;%d;%d;%dmHello, World!", colors["red"][0], colors["red"][1], colors["red"][2]),
+			output: fmt.Sprintf("%vHello, World!", colors["red"].String(false)),
 		}, {
 			input:  "%BgRed100 Hello, World!",
-			output: fmt.Sprintf("\x1b[48;2;%d;%d;%dmHello, World!", colors["red100"][0], colors["red100"][1], colors["red100"][2]),
+			output: fmt.Sprintf("%vHello, World!", colors["red100"].String(true)),
 		}, {
 			input:  "%italic %red Hello, World!%reset",
-			output: fmt.Sprintf("\x1b[%dm\x1b[38;2;%d;%d;%dmHello, World!\x1b[%dm", sgrParams["italic"], colors["red"][0], colors["red"][1], colors["red"][2], sgrParams["reset"]),
+			output: fmt.Sprintf("\x1b[%dm%vHello, World!\x1b[%dm", sgrParams["italic"], colors["red"].String(false), sgrParams["reset"]),
 		},
 	}
 
 	for _, s := range scenarios {
-		asrt.Equal(Colorize(s.input), s.output)
+		asrt.Equal(String(s.input), s.output)
 	}
 }
 
-func TestNewColor(t *testing.T) {
+func TestRegister(t *testing.T) {
 	asrt := assert.New(t)
 
 	scenarios := []struct {
 		name  string
-		value []int
+		value Color
 	}{
 		{
 			name:  "TestRed",
-			value: []int{255, 0, 0},
+			value: &Rgb{255, 0, 0},
 		}, {
 			name:  "TestGreen",
-			value: []int{10},
+			value: &Ansi{10},
 		},
 	}
 
 	for _, s := range scenarios {
 		// create new color
-		NewColor(s.name, s.value...)
+		Register(s.name, s.value)
 
-		_, exist := newColors[strings.ToLower(s.name)]
+		_, exist := additional[strings.ToLower(s.name)]
 		asrt.Equal(exist, true)
 	}
 }
 
-func TestUseNewColor(t *testing.T) {
+func TestUseAdditional(t *testing.T) {
 	asrt := assert.New(t)
 
-	NewColor("TestRed", 9)
-	NewColor("BgTestRed", 9)
+	Register("TestRed", &Ansi{9})
+	Register("BgTestRed", &Ansi{9})
 
 	scenarios := []struct {
 		text, match, output string
@@ -77,6 +78,6 @@ func TestUseNewColor(t *testing.T) {
 	}
 
 	for _, s := range scenarios {
-		asrt.Equal(useNewColor(s.text, s.match), s.output)
+		asrt.Equal(useAdditional(s.text, s.match), s.output)
 	}
 }
