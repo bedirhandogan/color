@@ -17,13 +17,13 @@ func TestColorize(t *testing.T) {
 	}{
 		{
 			input:  "%red Hello, World!",
-			output: fmt.Sprintf("%vHello, World!", colors["red"].String(false)),
+			output: fmt.Sprintf("%vHello, World!", defaultColors["red"].escape(false)),
 		}, {
 			input:  "%BgRed100 Hello, World!",
-			output: fmt.Sprintf("%vHello, World!", colors["red100"].String(true)),
+			output: fmt.Sprintf("%vHello, World!", defaultColors["red100"].escape(true)),
 		}, {
 			input:  "%italic %red Hello, World!%reset",
-			output: fmt.Sprintf("\x1b[%dm%vHello, World!\x1b[%dm", sgrParams["italic"], colors["red"].String(false), sgrParams["reset"]),
+			output: fmt.Sprintf("\x1b[%dm%vHello, World!\x1b[%dm", sgrParams["italic"], defaultColors["red"].escape(false), sgrParams["reset"]),
 		},
 	}
 
@@ -37,22 +37,22 @@ func TestRegister(t *testing.T) {
 
 	scenarios := []struct {
 		name  string
-		value Color
+		value color
 	}{
 		{
 			name:  "TestRed",
-			value: &Rgb{255, 0, 0},
+			value: &rgb{255, 0, 0},
 		}, {
 			name:  "TestGreen",
-			value: &Ansi{10},
+			value: &ansi{10},
 		},
 	}
 
 	for _, s := range scenarios {
 		// create new color
-		Register(s.name, s.value)
+		register(s.name, s.value)
 
-		_, exist := additional[strings.ToLower(s.name)]
+		_, exist := additionalColors[strings.ToLower(s.name)]
 		asrt.Equal(exist, true)
 	}
 }
@@ -60,24 +60,22 @@ func TestRegister(t *testing.T) {
 func TestUseAdditional(t *testing.T) {
 	asrt := assert.New(t)
 
-	Register("TestRed", &Ansi{9})
-	Register("BgTestRed", &Ansi{9})
+	register("TestRed", &ansi{9})
+	register("BgTestRed", &ansi{9})
 
 	scenarios := []struct {
-		text, match, output string
+		text, output string
 	}{
 		{
 			text:   "%TestRed Hello, World!",
-			match:  "%TestRed",
 			output: fmt.Sprintf("\x1b[38;5;%dmHello, World!", 9),
 		}, {
 			text:   "%BgTestRed Hello, World!",
-			match:  "%BgTestRed",
 			output: fmt.Sprintf("\x1b[48;5;%dmHello, World!", 9),
 		},
 	}
 
 	for _, s := range scenarios {
-		asrt.Equal(useAdditional(s.text, s.match), s.output)
+		asrt.Equal(String(s.text), s.output)
 	}
 }
