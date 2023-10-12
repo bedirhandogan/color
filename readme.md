@@ -1,4 +1,4 @@
-# Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color) [![Static Badge](https://img.shields.io/badge/Color%20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) 
+# Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color) [![Static Badge](https://img.shields.io/badge/Color&20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) 
 
 You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index. 
 All formatters are parsed as ANSI Escape Code.
@@ -15,40 +15,40 @@ $ go get github.com/bedirhandogan/color
 ### Single Colorize
 ```golang
 // Print all text in one color
-fmt.Println(color.Colorize("%Red Print this text in color."))
+fmt.Println(color.String("&Red Print this text in color."))
 
 // Print all text in one color, specifying tone
-fmt.Println(color.Colorize("%Magenta80 Print this text in magenta 80 shades."))
+fmt.Println(color.String("&Magenta80 Print this text in magenta 80 shades."))
 
 // Color and print the background of all text by adding bg in front of it
-fmt.Println(color.Colorize("%BgCyan Color this text with a cyan background and print it."))
-fmt.Println(color.Colorize("%BgYellow50 Color this text with a yellow 50 shades background and print it"))
+fmt.Println(color.String("&BgCyan Color this text with a cyan background and print it."))
+fmt.Println(color.String("&BgYellow50 Color this text with a yellow 50 shades background and print it"))
 ```
 
 ### Multiple Colorize
 ```golang
 // Print all text with multiple colors
-fmt.Println(color.Colorize("%Blue Print this text with %Green multiple colors."))
+fmt.Println(color.String("&Blue Print this text with &Green multiple colors."))
 
 // Print all text with multiple color, specifying tone
-fmt.Println(color.Colorize("%Blue70 Print this text with %Green20 multiple colors."))
+fmt.Println(color.String("&Blue70 Print this text with &Green20 multiple colors."))
 
 // Print all text with multiple background color
-fmt.Println(color.Colorize("%BgYellow20 Print this text with %BgBlue multiple background colors."))
+fmt.Println(color.String("&BgYellow20 Print this text with &BgBlue multiple background colors."))
 ``` 
 
 ### Use [SGR](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters) Parameters
 ```golang
 // Normalize text
-fmt.Println(color.Colorize("%Blue Print this text in color with reset. %Reset"))
+fmt.Println(color.String("&Blue Print this text in color with reset. &Reset"))
 
 // Bold text
-fmt.Println(color.Colorize("%Bold %Yellow80 Print this text in color with bold."))
-fmt.Println(color.Colorize("%Bold Print this text in bold."))
+fmt.Println(color.String("&Bold &Yellow80 Print this text in color with bold."))
+fmt.Println(color.String("&Bold Print this text in bold."))
 
 // Italic text
-fmt.Println(color.Colorize("%Italic %Cyan50 Print this text in color with italicized."))
-fmt.Println(color.Colorize("%Italic Print this text in italicized."))
+fmt.Println(color.String("&Italic &Cyan50 Print this text in color with italicized."))
+fmt.Println(color.String("&Italic Print this text in italicized."))
 
 // You can also format as Blink, Underline, Overline, Invert & Strike.
 ``` 
@@ -56,26 +56,26 @@ fmt.Println(color.Colorize("%Italic Print this text in italicized."))
 ### Native Formatters
 ```golang
 // This way you can still use native formatters
-fmt.Printf(color.Colorize("%Cyan Print this text with %s"), "native formatter")
+fmt.Printf(color.String("&Cyan Print this text with &s"), "native formatter")
 ```
 
 ### Create New Color
 ```golang
 // Create and use new solid color with ANSI 256 index
-color.NewColor("FaintRed", 124)
-fmt.Println(color.Colorize("%FaintRed Print this text faint red color."))
+color.RegisterAnsi("FaintRed", 124)
+fmt.Println(color.String("&FaintRed Print this text faint red color."))
 
 // Create and use new background color with ANSI 256 index
-color.NewColor("BgFaintRed", 124)
-fmt.Println(color.Colorize("%BgFaintRed Print this text faint red background color."))
+color.RegisterAnsi("BgFaintRed", 124)
+fmt.Println(color.String("&BgFaintRed Print this text faint red background color."))
 
 // Create and use new solid color with RGB
-color.NewColor("LightRed", 255, 192, 203)
-fmt.Println(color.Colorize("%FaintRed Print this text light red color."))
+color.RegisterRgb("LightRed", 255, 192, 203)
+fmt.Println(color.String("&FaintRed Print this text light red color."))
 
 // Create and use new background color with RGB
-color.NewColor("BgLightRed", 255, 192, 203)
-fmt.Println(color.Colorize("%BgFaintRed Print this text light red background color."))
+color.RegisterRgb("BgLightRed", 255, 192, 203)
+fmt.Println(color.String("&BgFaintRed Print this text light red background color."))
 ```
 
 ## [Colors](#colors)
