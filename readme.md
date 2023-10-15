@@ -1,4 +1,4 @@
-# Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color) [![Static Badge](https://img.shields.io/badge/Color&20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) 
+# Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color) [![Static Badge](https://img.shields.io/badge/Color%20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) 
 
 You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index. 
 All formatters are parsed as ANSI Escape Code.
