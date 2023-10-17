@@ -5,52 +5,49 @@ import (
 	"math"
 )
 
-func AnsiToRgb(ansi uint8) (r, g, b uint8) {
-	if ansi < 16 {
-		switch ansi {
-		case 0: // Black
-			r, g, b = 0, 0, 0
-		case 1: // Red
-			r, g, b = 128, 0, 0
-		case 2: // Green
-			r, g, b = 0, 128, 0
-		case 3: // Yellow
-			r, g, b = 128, 128, 0
-		case 4: // Blue
-			r, g, b = 0, 0, 128
-		case 5: // Magenta
-			r, g, b = 128, 0, 128
-		case 6: // Cyan
-			r, g, b = 0, 128, 128
-		case 7: // White
-			r, g, b = 192, 192, 192
-		case 8: // Gray
-			r, g, b = 128, 128, 128
-		case 9: // Bright Red
-			r, g, b = 255, 0, 0
-		case 10: // Bright Green
-			r, g, b = 0, 255, 0
-		case 11: // Bright Yellow
-			r, g, b = 255, 255, 0
-		case 12: // Bright Blue
-			r, g, b = 0, 0, 255
-		case 13: // Bright Magenta
-			r, g, b = 255, 0, 255
-		case 14: // Bright Cyan
-			r, g, b = 0, 255, 255
-		case 15: // Bright White
-			r, g, b = 255, 255, 255
+var first15Index = [][3]uint8{
+	{0, 0, 0},       // Black
+	{255, 0, 0},     // Red
+	{0, 255, 0},     // Green
+	{255, 255, 0},   // Yellow
+	{0, 0, 255},     // Blue
+	{255, 0, 255},   // Magenta
+	{0, 255, 255},   // Cyan
+	{255, 255, 255}, // White
+	{128, 128, 128}, // Gray
+	{255, 0, 0},     // Bright Red
+	{0, 255, 0},     // Bright Green
+	{255, 255, 0},   // Bright Yellow
+	{0, 0, 255},     // Bright Blue
+	{255, 0, 255},   // Bright Magenta
+	{0, 255, 255},   // Bright Cyan
+	{255, 255, 255}, // Bright White
+}
+
+func AnsiToRgb(index uint8) rgb {
+	switch {
+	case index < 16:
+		return rgb{
+			r: first15Index[index][0],
+			g: first15Index[index][1],
+			b: first15Index[index][2],
 		}
-	} else if ansi >= 16 && ansi <= 231 {
-		sub := ansi - 16
-		r = uint8(((sub / 36) % 6) * 255 / 5)
-		g = uint8(((sub / 6) % 6) * 255 / 5)
-		b = uint8((sub % 6) * 255 / 5)
-	} else if ansi >= 232 && ansi <= 255 {
-		val := uint8((ansi-232)*10 + 8)
-		r, g, b = val, val, val
+	case index >= 16 && index <= 231:
+		sub := index - 16
+		return rgb{
+			r: uint8(((sub / 36) % 6) * 255 / 5),
+			g: uint8(((sub / 6) % 6) * 255 / 5),
+			b: uint8((sub % 6) * 255 / 5),
+		}
+	case index >= 232:
+		return rgb{
+			r: uint8((index-232)*10 + 8),
+			g: uint8((index-232)*10 + 8),
+			b: uint8((index-232)*10 + 8),
+		}
 	}
-	return
+
+	return rgb{}
 }
 
 func RgbToAnsi(r, g, b uint8) uint8 {
