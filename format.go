@@ -1,15 +1,11 @@
 package color
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 )
 
-func Stringf(format string, a ...interface{}) string {
-	return String(fmt.Sprintf(format, a...))
-}
-
+// String function recognizes certain patterns in the entered text and formats the text according to these patterns.
 func String(text string) string {
 	pattern := `&[a-zA-Z0-9]+`
 	regx := regexp.MustCompile(pattern)
@@ -40,7 +36,7 @@ func String(text string) string {
 			target = matchLower[1:]
 		}
 
-		escape, exists := Escape(target, back)
+		escape, exists := escape(target, back)
 		if exists {
 			replace(match, escape)
 		}

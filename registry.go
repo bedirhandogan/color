@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// Colors to use as default
 var defaultColors = map[string]color{
 	// Red tones
 	"red":    &rgb{255, 0, 0}, // Red
@@ -111,6 +112,7 @@ var defaultColors = map[string]color{
 	"black100": &rgb{160, 160, 160}, // Light Gray
 }
 
+// New colors to register
 var additionalColors = make(map[string]color)
 
 var sgrParams = map[string]uint8{
@@ -124,7 +126,12 @@ var sgrParams = map[string]uint8{
 	"strike":    9,
 }
 
-func Escape(name string, back bool) (string, bool) {
+// Escape function generates an escape sequence for the given color name,
+// specifying whether it's for text (foreground) or background. If the color
+// name exists in additionalColors or defaultColors, it returns the corresponding
+// escape sequence along with true. If the color name is not found, it returns
+// an empty string and false.
+func escape(name string, back bool) (string, bool) {
 	value, exists := additionalColors[name]
 	if exists {
 		return value.escape(back), true
@@ -138,14 +145,21 @@ func Escape(name string, back bool) (string, bool) {
 	return "", false
 }
 
+// RegisterAnsi function, registers an ANSI color with the given name and code.
 func RegisterAnsi(name string, code uint8) error {
 	return register(name, &ansi{code})
 }
 
+// RegisterRgb function, registers an RGB color with the given name and RGB components.
 func RegisterRgb(name string, r, g, b uint8) error {
 	return register(name, &rgb{r, g, b})
 }
 
+// register function adds the specified color object to the additionalColors map
+// with the given name, converting the name to lowercase for case-insensitive lookup.
+// If a color with the same name already exists in the defaultColors map, it returns
+// an error indicating that the color already exists. Otherwise, it adds the color
+// to the additionalColors map and returns nil, indicating a successful registration.
 func register(name string, color color) error {
 	if _, exist := defaultColors[strings.ToLower(name)]; exist {
 		return fmt.Errorf("color '%s' already exists", name)

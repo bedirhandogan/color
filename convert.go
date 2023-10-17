@@ -5,6 +5,7 @@ import (
 	"math"
 )
 
+// RGB equivalent of the first 15 ANSI values.
 var first15Index = [][3]uint8{
 	{0, 0, 0},       // Black
 	{255, 0, 0},     // Red
@@ -24,6 +25,7 @@ var first15Index = [][3]uint8{
 	{255, 255, 255}, // Bright White
 }
 
+// AnsiToRgb function, converts a number specified as an ANSI color index to an RGB color value.
 func AnsiToRgb(index uint8) rgb {
 	switch {
 	case index < 16:
@@ -58,6 +60,7 @@ func RgbToAnsi(r, g, b uint8) uint8 {
 	return uint8(16 + 36*int(ratio(r)) + 6*int(ratio(g)) + int(ratio(b)))
 }
 
+// AnsiToEscape function, formats a given ANSI color code as a terminal escape sequence.
 func AnsiToEscape(code uint8, back bool) string {
 	var format string
 
@@ -70,6 +73,7 @@ func AnsiToEscape(code uint8, back bool) string {
 	return fmt.Sprintf(format, code)
 }
 
+// RgbToEscape function, converts RGB color components to an escape string that can be used in the terminal.
 func RgbToEscape(r, g, b uint8, back bool) string {
 	var format string
 
@@ -82,6 +86,7 @@ func RgbToEscape(r, g, b uint8, back bool) string {
 	return fmt.Sprintf(format, r, g, b)
 }
 
+// SgrToEscape function, converts to escape sequence shown in terminal using given SGR (Select Graphics Representation).
 func SgrToEscape(code uint8) string {
 	return fmt.Sprintf("\x1b[%dm", code)
 }
