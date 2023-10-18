@@ -1,4 +1,4 @@
-# Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color) [![Static Badge](https://img.shields.io/badge/Color%20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) [![Static Badge](https://img.shields.io/badge/SGR-D80032)](https://github.com/bedirhandogan/color#sqr)
+# Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color) [![Static Badge](https://img.shields.io/badge/Color%20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) [![Static Badge](https://img.shields.io/badge/SGR%20Parameters-D80032)](https://github.com/bedirhandogan/color#sqr-parameters)
 
 You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index. 
 All formatters are parsed as ANSI Escape Code.
@@ -217,7 +217,7 @@ Below are the default color shades you can use:
 | Black90    | `(144, 144, 144)` | `#909090` | ![Loading...](https://via.placeholder.com/15/909090/000000?text=+) |
 | Black100   | `(160, 160, 160)` | `#A0A0A0` | ![Loading...](https://via.placeholder.com/15/A0A0A0/000000?text=+) |
 
-## [SGR](#sgr)
+## [SGR Parameters](#sgr-parameters)
 
 | Parameter Name | Escape Code |
 |----------------|-------------|
