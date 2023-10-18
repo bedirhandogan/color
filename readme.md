@@ -217,7 +217,7 @@ Below are the default color shades you can use:
 | Black90    | `(144, 144, 144)` | `#909090` | ![Loading...](https://via.placeholder.com/15/909090/000000?text=+) |
 | Black100   | `(160, 160, 160)` | `#A0A0A0` | ![Loading...](https://via.placeholder.com/15/A0A0A0/000000?text=+) |
 
-## [SGR](#sgr) (Select Graphic Rendition) parameters
+## [SGR](#sgr)
 
 | Parameter Name | Escape Code |
 |----------------|-------------|
