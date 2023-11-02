@@ -52,9 +52,20 @@ func AnsiToRgb(index uint8) rgb {
 	return rgb{}
 }
 
+// RgbToAnsi converts a color in the RGB color space to an ANSI color code.
 func RgbToAnsi(r, g, b uint8) uint8 {
+	if r == b && g == b {
+		for i := 10; i <= 240; i += 10 {
+			if r <= uint8(i) && r <= 230 {
+				return uint8(232 + (i / 10))
+			}
+		}
+
+		return 255
+	}
+
 	ratio := func(x uint8) uint8 {
-		return uint8(math.Round(float64(x) / 255.0 * 5.0))
+		return uint8(math.Round(float64(x) / 255 * 5))
 	}
 
 	return uint8(16 + 36*int(ratio(r)) + 6*int(ratio(g)) + int(ratio(b)))
