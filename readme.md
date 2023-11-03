@@ -77,6 +77,26 @@ color.RegisterRgb("BgLightRed", 255, 192, 203)
 fmt.Println(color.String("&BgFaintRed Print this text light red background color."))
 ```
 
+### Converts
+```golang
+// Convert ANSI index to RGB
+color.AnsiToRgb(82)
+
+// Convert RGB to ANSI index
+color.RgbToAnsi(50, 0, 50)
+
+// Convert ANSI Index to escape code
+color.AnsiToEscape(95, true) // \x1b[48;5;<i>m - Background
+color.AnsiToEscape(95, false) // \x1b[38;5;<i>m - Foreground
+
+// Convert RGB to escape code
+color.RgbToEscape(94, 56, 82, true) // \x1b[48;2;<r>;<g>;<b>m - Background
+color.RgbToEscape(94, 56, 82, false) // \x1b[38;2;<r>;<g>;<b>m - Foreground
+
+// Convert SGR parameter to escape code
+color.SgrToEscape(3) // \x1b[<p>m
+```
+
 ## [Colors](#colors)
 Below are the default color shades you can use:
 - [Red Shades](#red-shades)
