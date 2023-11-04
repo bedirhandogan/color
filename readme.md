@@ -77,7 +77,7 @@ color.RegisterRgb("BgLightRed", 255, 192, 203)
 fmt.Println(color.String("&BgFaintRed Print this text light red background color."))
 ```
 
-### Converts
+### Converters
 ```golang
 // Convert ANSI index to RGB
 color.AnsiToRgb(82)
