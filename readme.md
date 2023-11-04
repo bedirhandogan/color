@@ -7,7 +7,7 @@ All formatters are parsed as ANSI Escape Code.
 
 ## Install
 ```bash
-$ go get github.com/bedirhandogan/color
+$ go get github.com/bedirhandogan/color/v2
 ```
 
 ## Uses
