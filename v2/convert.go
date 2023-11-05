@@ -3,6 +3,7 @@ package color
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 // RGB equivalent of the first 15 ANSI values.
@@ -69,6 +70,71 @@ func RgbToAnsi(r, g, b uint8) uint8 {
 	}
 
 	return uint8(16 + 36*int(ratio(r)) + 6*int(ratio(g)) + int(ratio(b)))
+}
+
+// HexToRgb converts the given hex color code to RGB (Red, Green, Blue) components.
+func HexToRgb(hex string) rgb {
+	if len(hex[1:]) != 6 {
+		return rgb{}
+	}
+
+	if hex[0] == '#' {
+		hex = hex[1:]
+	}
+
+	toR, err := strconv.ParseInt(hex[0:2], 16, 0)
+	if err != nil {
+		return rgb{}
+	}
+
+	toG, err := strconv.ParseInt(hex[2:4], 16, 0)
+	if err != nil {
+		return rgb{}
+	}
+
+	toB, err := strconv.ParseInt(hex[4:6], 16, 0)
+	if err != nil {
+		return rgb{}
+	}
+
+	return rgb{
+		r: uint8(toR),
+		g: uint8(toG),
+		b: uint8(toB),
+	}
+}
+
+// HexToAnsi converts the given hex color code to its ANSI color code representation.
+func HexToAnsi(hex string) uint8 {
+	to := HexToRgb(hex)
+	return RgbToAnsi(to.r, to.g, to.b)
+}
+
+// RgbToHex converts RGB (Red, Green, Blue) color components to a hexadecimal color code.
+func RgbToHex(r, g, b uint8) string {
+	hexR := strconv.FormatInt(int64(r), 16)
+	hexG := strconv.FormatInt(int64(g), 16)
+	hexB := strconv.FormatInt(int64(b), 16)
+
+	if len(hexR) == 1 {
+		hexR = "0" + hexR
+	}
+
+	if len(hexG) == 1 {
+		hexG = "0" + hexG
+	}
+
+	if len(hexB) == 1 {
+		hexB = "0" + hexB
+	}
+
+	return "#" + hexR + hexG + hexB
+}
+
+// AnsiToHex takes an ANSI color index as input and converts it to a hexadecimal color representation.
+func AnsiToHex(index uint8) string {
+	to := AnsiToRgb(index)
+	return RgbToHex(to.r, to.g, to.b)
 }
 
 // AnsiToEscape function, formats a given ANSI color code as a terminal escape sequence.
