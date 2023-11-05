@@ -1,17 +1,20 @@
 # Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color/v2) [![Static Badge](https://img.shields.io/badge/Color%20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) [![Static Badge](https://img.shields.io/badge/SGR%20Parameters-D80032)](https://github.com/bedirhandogan/color#sgr-parameters)
 
-You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index. 
+You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index.
 All formatters are parsed as ANSI Escape Code.
 
 ![code sample](https://github.com/bedirhandogan/color/assets/59766658/b1b8974c-51d4-456b-b198-8caf813c6eb8)
 
 ## Install
+
 ```bash
 $ go get github.com/bedirhandogan/color/v2
 ```
 
 ## Uses
+
 ### Single Colorize
+
 ```golang
 // Print all text in one color
 fmt.Println(color.String("&Red Print this text in color."))
@@ -25,6 +28,7 @@ fmt.Println(color.String("&BgYellow50 Color this text with a yellow 50 shades ba
 ```
 
 ### Multiple Colorize
+
 ```golang
 // Print all text with multiple colors
 fmt.Println(color.String("&Blue Print this text with &Green multiple colors."))
@@ -34,9 +38,10 @@ fmt.Println(color.String("&Blue70 Print this text with &Green20 multiple colors.
 
 // Print all text with multiple background color
 fmt.Println(color.String("&BgYellow20 Print this text with &BgBlue multiple background colors."))
-``` 
+```
 
-### Use [SGR](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters) Parameters
+### Use [SGR](<https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters>) Parameters
+
 ```golang
 // Normalize text
 fmt.Println(color.String("&Blue Print this text in color with reset. &Reset"))
@@ -50,15 +55,17 @@ fmt.Println(color.String("&Italic &Cyan50 Print this text in color with italiciz
 fmt.Println(color.String("&Italic Print this text in italicized."))
 
 // You can also format as Blink, Underline, Overline, Invert & Strike.
-``` 
+```
 
 ### Native Formatters
+
 ```golang
 // This way you can still use native formatters
 fmt.Printf(color.String("&Cyan Print this text with %s"), "native formatter")
 ```
 
 ### Create New Color
+
 ```golang
 // Create and use new solid color with ANSI 256 index
 color.RegisterAnsi("FaintRed", 124)
@@ -78,7 +85,9 @@ fmt.Println(color.String("&BgFaintRed Print this text light red background color
 ```
 
 ## Converters
+
 ### RGB
+
 ```golang
 // Convert RGB to ANSI index
 color.RgbToAnsi(50, 0, 50)
@@ -92,6 +101,7 @@ color.RgbToEscape(94, 56, 82, false) // \x1b[38;2;<r>;<g>;<b>m - Foreground
 ```
 
 ### ANSI
+
 ```golang
 // Convert ANSI index to RGB
 color.AnsiToRgb(82)
@@ -104,6 +114,7 @@ color.AnsiToEscape(95, false) // \x1b[38;5;<i>m - Foreground
 ```
 
 ### HEX
+
 ```golang
 // Convert HEX to RGB
 color.HexToRgb("#32A852")
@@ -113,13 +124,16 @@ color.HexToAnsi("#32A852")
 ```
 
 ### SGR
+
 ```golang
 // Convert SGR parameter to escape code
 color.SgrToEscape(3) // \x1b[<p>m
 ```
 
 ## [Colors](#colors)
+
 Below are the default color shades you can use:
+
 - [Red Shades](#red-shades)
 - [Green Shades](#green-shades)
 - [Yellow Shades](#yellow-shades)
@@ -132,7 +146,7 @@ Below are the default color shades you can use:
 ### [Red Shades](#red-shades)
 
 | Color Name | RGB           | Hex       | Preview                                                            |
-|------------|---------------|-----------|--------------------------------------------------------------------|
+| ---------- | ------------- | --------- | ------------------------------------------------------------------ |
 | Red        | `(255, 0, 0)` | `#FF0000` | ![Loading...](https://via.placeholder.com/15/FF0000/000000?text=+) |
 | Red10      | `(240, 0, 0)` | `#F00000` | ![Loading...](https://via.placeholder.com/15/F00000/000000?text=+) |
 | Red20      | `(224, 0, 0)` | `#E00000` | ![Loading...](https://via.placeholder.com/15/E00000/000000?text=+) |
@@ -148,7 +162,7 @@ Below are the default color shades you can use:
 ### [Green Shades](#green-shades)
 
 | Color Name | RGB           | Hex       | Preview                                                            |
-|------------|---------------|-----------|--------------------------------------------------------------------|
+| ---------- | ------------- | --------- | ------------------------------------------------------------------ |
 | Green      | `(0, 255, 0)` | `#00FF00` | ![Loading...](https://via.placeholder.com/15/00FF00/000000?text=+) |
 | Green10    | `(0, 240, 0)` | `#00F000` | ![Loading...](https://via.placeholder.com/15/00F000/000000?text=+) |
 | Green20    | `(0, 224, 0)` | `#00E000` | ![Loading...](https://via.placeholder.com/15/00E000/000000?text=+) |
@@ -164,7 +178,7 @@ Below are the default color shades you can use:
 ### [Yellow Shades](#yellow-shades)
 
 | Color Name | RGB             | Hex       | Preview                                                            |
-|------------|-----------------|-----------|--------------------------------------------------------------------|
+| ---------- | --------------- | --------- | ------------------------------------------------------------------ |
 | Yellow     | `(255, 255, 0)` | `#FFFF00` | ![Loading...](https://via.placeholder.com/15/FFFF00/000000?text=+) |
 | Yellow10   | `(240, 240, 0)` | `#F0F000` | ![Loading...](https://via.placeholder.com/15/F0F000/000000?text=+) |
 | Yellow20   | `(224, 224, 0)` | `#E0E000` | ![Loading...](https://via.placeholder.com/15/E0E000/000000?text=+) |
@@ -177,11 +191,10 @@ Below are the default color shades you can use:
 | Yellow90   | `(112, 112, 0)` | `#707000` | ![Loading...](https://via.placeholder.com/15/707000/000000?text=+) |
 | Yellow100  | `(96, 96, 0)`   | `#606000` | ![Loading...](https://via.placeholder.com/15/606000/000000?text=+) |
 
-
 ### [Cyan Shades](#cyan-shades)
 
 | Color Name | RGB             | Hex       | Preview                                                            |
-|------------|-----------------|-----------|--------------------------------------------------------------------|
+| ---------- | --------------- | --------- | ------------------------------------------------------------------ |
 | Cyan       | `(0, 255, 255)` | `#00FFFF` | ![Loading...](https://via.placeholder.com/15/00FFFF/000000?text=+) |
 | Cyan10     | `(0, 240, 240)` | `#00F0F0` | ![Loading...](https://via.placeholder.com/15/00F0F0/000000?text=+) |
 | Cyan20     | `(0, 224, 224)` | `#00E0E0` | ![Loading...](https://via.placeholder.com/15/00E0E0/000000?text=+) |
@@ -197,7 +210,7 @@ Below are the default color shades you can use:
 ### [Blue Shades](#blue-shades)
 
 | Color Name | RGB           | Hex       | Preview                                                            |
-|------------|---------------|-----------|--------------------------------------------------------------------|
+| ---------- | ------------- | --------- | ------------------------------------------------------------------ |
 | Blue       | `(0, 0, 255)` | `#0000FF` | ![Loading...](https://via.placeholder.com/15/0000FF/000000?text=+) |
 | Blue10     | `(0, 0, 240)` | `#0000F0` | ![Loading...](https://via.placeholder.com/15/0000F0/000000?text=+) |
 | Blue20     | `(0, 0, 224)` | `#0000E0` | ![Loading...](https://via.placeholder.com/15/0000E0/000000?text=+) |
@@ -213,7 +226,7 @@ Below are the default color shades you can use:
 ### [Magenta Shades](#magenta-shades)
 
 | Color Name | RGB             | Hex       | Preview                                                            |
-|------------|-----------------|-----------|--------------------------------------------------------------------|
+| ---------- | --------------- | --------- | ------------------------------------------------------------------ |
 | Magenta    | `(255, 0, 255)` | `#FF00FF` | ![Loading...](https://via.placeholder.com/15/FF00FF/000000?text=+) |
 | Magenta10  | `(240, 0, 240)` | `#F000F0` | ![Loading...](https://via.placeholder.com/15/F000F0/000000?text=+) |
 | Magenta20  | `(224, 0, 224)` | `#E000E0` | ![Loading...](https://via.placeholder.com/15/E000E0/000000?text=+) |
@@ -229,7 +242,7 @@ Below are the default color shades you can use:
 ### [White Shades](#white-shades)
 
 | Color Name | RGB               | Hex       | Preview                                                            |
-|------------|-------------------|-----------|--------------------------------------------------------------------|
+| ---------- | ----------------- | --------- | ------------------------------------------------------------------ |
 | White      | `(255, 255, 255)` | `#FFFFFF` | ![Loading...](https://via.placeholder.com/15/FFFFFF/000000?text=+) |
 | White10    | `(240, 240, 240)` | `#F0F0F0` | ![Loading...](https://via.placeholder.com/15/F0F0F0/000000?text=+) |
 | White20    | `(224, 224, 224)` | `#E0E0E0` | ![Loading...](https://via.placeholder.com/15/E0E0E0/000000?text=+) |
@@ -245,7 +258,7 @@ Below are the default color shades you can use:
 ### [Black Shades](#black-shades)
 
 | Color Name | RGB               | Hex       | Preview                                                            |
-|------------|-------------------|-----------|--------------------------------------------------------------------|
+| ---------- | ----------------- | --------- | ------------------------------------------------------------------ |
 | Black      | `(0, 0, 0)`       | `#000000` | ![Loading...](https://via.placeholder.com/15/000000/000000?text=+) |
 | Black10    | `(16, 16, 16)`    | `#101010` | ![Loading...](https://via.placeholder.com/15/101010/000000?text=+) |
 | Black20    | `(32, 32, 32)`    | `#202020` | ![Loading...](https://via.placeholder.com/15/202020/000000?text=+) |
@@ -261,7 +274,7 @@ Below are the default color shades you can use:
 ## [SGR Parameters](#sgr-parameters)
 
 | Parameter Name | Escape Code |
-|----------------|-------------|
+| -------------- | ----------- |
 | Reset          | `0`         |
 | Bold           | `1`         |
 | Italic         | `3`         |
@@ -271,6 +284,6 @@ Below are the default color shades you can use:
 | Invert         | `7`         |
 | Strike         | `9`         |
 
-
 ## Ups!!!
+
 You scrolled down too much 😂
