@@ -55,7 +55,7 @@ fmt.Println(color.String("&Italic Print this text in italicized."))
 ### Native Formatters
 ```golang
 // This way you can still use native formatters
-fmt.Printf(color.String("&Cyan Print this text with &s"), "native formatter")
+fmt.Printf(color.String("&Cyan Print this text with %s"), "native formatter")
 ```
 
 ### Create New Color
