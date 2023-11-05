@@ -18,7 +18,6 @@ func String(text string) string {
 	}
 
 	for _, match := range matches {
-
 		sgr, exists := sgrParams[strings.ToLower(match[1:])]
 		if exists {
 			replace(match, SgrToEscape(sgr))
@@ -28,7 +27,7 @@ func String(text string) string {
 		matchLower := strings.ToLower(match)
 
 		var target string
-		back := matchLower[1:3] == "bg"
+		back := len(matchLower) >= 3 && matchLower[1:3] == "bg"
 
 		if back {
 			target = matchLower[3:]
