@@ -77,22 +77,43 @@ color.RegisterRgb("BgLightRed", 255, 192, 203)
 fmt.Println(color.String("&BgFaintRed Print this text light red background color."))
 ```
 
-### Converters
+## Converters
+### RGB
 ```golang
-// Convert ANSI index to RGB
-color.AnsiToRgb(82)
-
 // Convert RGB to ANSI index
 color.RgbToAnsi(50, 0, 50)
 
-// Convert ANSI Index to escape code
-color.AnsiToEscape(95, true) // \x1b[48;5;<i>m - Background
-color.AnsiToEscape(95, false) // \x1b[38;5;<i>m - Foreground
+// Convert RGB to HEX
+color.RgbToHex(237, 98, 23)
 
 // Convert RGB to escape code
 color.RgbToEscape(94, 56, 82, true) // \x1b[48;2;<r>;<g>;<b>m - Background
 color.RgbToEscape(94, 56, 82, false) // \x1b[38;2;<r>;<g>;<b>m - Foreground
+```
 
+### ANSI
+```golang
+// Convert ANSI index to RGB
+color.AnsiToRgb(82)
+// Convert ANSI to HEX
+color.AnsiToHex(156)
+
+// Convert ANSI Index to escape code
+color.AnsiToEscape(95, true) // \x1b[48;5;<i>m - Background
+color.AnsiToEscape(95, false) // \x1b[38;5;<i>m - Foreground
+```
+
+### HEX
+```golang
+// Convert HEX to RGB
+color.HexToRgb("#32A852")
+
+// Convert HEX to ANSI
+color.HexToAnsi("#32A852")
+```
+
+### SGR
+```golang
 // Convert SGR parameter to escape code
 color.SgrToEscape(3) // \x1b[<p>m
 ```

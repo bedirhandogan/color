@@ -1,6 +1,6 @@
 # Color [![Go Reference](https://pkg.go.dev/badge/github.com/bedirhandogan/color.svg)](https://pkg.go.dev/github.com/bedirhandogan/color/v2) [![Static Badge](https://img.shields.io/badge/Color%20Shades-3A2BE2)](https://github.com/bedirhandogan/color#colors) [![Static Badge](https://img.shields.io/badge/SGR%20Parameters-D80032)](https://github.com/bedirhandogan/color#sgr-parameters)
 
-You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index. 
+You can use the color pack to colorize the output in the terminal with custom formatters or create custom colors with RGB and [ANSI 256](https://robotmoon.com/256-colors/) index.
 All formatters are parsed as ANSI Escape Code.
 
 ![code sample](https://github.com/bedirhandogan/color/assets/59766658/b1b8974c-51d4-456b-b198-8caf813c6eb8)
@@ -77,22 +77,43 @@ color.RegisterRgb("BgLightRed", 255, 192, 203)
 fmt.Println(color.String("&BgFaintRed Print this text light red background color."))
 ```
 
-### Converters
+## Converters
+### RGB
 ```golang
-// Convert ANSI index to RGB
-color.AnsiToRgb(82)
-
 // Convert RGB to ANSI index
 color.RgbToAnsi(50, 0, 50)
 
-// Convert ANSI Index to escape code
-color.AnsiToEscape(95, true) // \x1b[48;5;<i>m - Background
-color.AnsiToEscape(95, false) // \x1b[38;5;<i>m - Foreground
+// Convert RGB to HEX
+color.RgbToHex(237, 98, 23)
 
 // Convert RGB to escape code
 color.RgbToEscape(94, 56, 82, true) // \x1b[48;2;<r>;<g>;<b>m - Background
 color.RgbToEscape(94, 56, 82, false) // \x1b[38;2;<r>;<g>;<b>m - Foreground
+```
 
+### ANSI
+```golang
+// Convert ANSI index to RGB
+color.AnsiToRgb(82)
+// Convert ANSI to HEX
+color.AnsiToHex(156)
+
+// Convert ANSI Index to escape code
+color.AnsiToEscape(95, true) // \x1b[48;5;<i>m - Background
+color.AnsiToEscape(95, false) // \x1b[38;5;<i>m - Foreground
+```
+
+### HEX
+```golang
+// Convert HEX to RGB
+color.HexToRgb("#32A852")
+
+// Convert HEX to ANSI
+color.HexToAnsi("#32A852")
+```
+
+### SGR
+```golang
 // Convert SGR parameter to escape code
 color.SgrToEscape(3) // \x1b[<p>m
 ```
